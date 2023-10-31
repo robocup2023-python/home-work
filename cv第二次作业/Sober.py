@@ -1,0 +1,16 @@
+import cv2
+import numpy as np 
+image = cv2.imread('/home/robocup/cv/cv第一次作业/v2-58537195d3a7ff6e43fe4d4d30ae1ace_1440w.jpg', cv2.IMREAD_GRAYSCALE)
+smoothed_image=cv2.GaussianBlur(image,(5,5),0)
+equalized_image = cv2.equalizeHist(smoothed_image)
+sobel_x = cv2.Sobel(equalized_image, cv2.CV_64F, 1, 0, ksize=3) 
+sobel_y = cv2.Sobel(equalized_image, cv2.CV_64F, 0, 1, ksize=3) 
+gradient_magnitude = np.sqrt(sobel_x**2 + sobel_y**2)
+gradient_direction = np.arctan2(sobel_y, sobel_x)
+cv2.imshow('Original Image', image)
+cv2.imshow('Smoothed Image',smoothed_image)
+cv2.imshow('Equalized Image',equalized_image)
+cv2.imshow('Gradient Magnitude', gradient_magnitude)
+cv2.imshow('Gradient Direction', gradient_direction)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
